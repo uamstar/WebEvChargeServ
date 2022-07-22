@@ -1,0 +1,36 @@
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    	<encoder>
+			<pattern>%d{MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">   
+			<evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+        		<marker>USER</marker>
+      		</evaluator>
+     		<onMismatch>DENY</onMismatch>
+     		<onMatch>NEUTRAL</onMatch>
+		</filter>
+    	<file>c:/temp/Tomcat8.5/webEVcharging.log</file>
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+     		<!-- daily rollover -->
+      		<fileNamePattern>c:/temp/Tomcat8.5/webEVcharging.%d{yyyy-MM-dd}.log</fileNamePattern>
+      		<!-- keep 30 days' worth of history -->
+      		<maxHistory>30</maxHistory>
+    	</rollingPolicy>
+    	<encoder>
+      		<pattern>%d{MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+    	</encoder>
+  	</appender>
+	
+	<logger level="DEBUG" name="com.pakingtek.webevcharge">
+	     <appender-ref ref="FILE" />
+	</logger>
+	
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
